@@ -11,56 +11,29 @@ AvlTree::AvlTree()
 {
 }
 
-/**
- * Destructor.
- */
 AvlTree::~AvlTree()
 {
 }
 
-/**
- * Private method to compute the height of a subtree.
- * Overrides the base class method.
- * @param ptr pointer to the root node of the subtree.
- * @return the height of the subtree.
- */
 int AvlTree::height(const BinaryNode *ptr) const
 {
 	return ptr == nullptr ? -1 : ptr->height;
 }
 
-/**
- * Private method to insert a data item into a subtree
- * and set the new root of the subtree.
- * Overrides the base class method.
- * @param data the data to insert.
- * @param ptr pointer to the root node of the subtree.
- */
+
 void AvlTree::insert(const int data, BinaryNode* &ptr)
 {
 	BinarySearchTree::insert(data, ptr);
 	balance(ptr);
 }
 
-/**
- * Private method to remove a data item from a subtree
- * and set the new root node of the subtree.
- * Do nothing if the data item is not found.
- * Overrides the base class method.
- * @param data the data to remove.
- * @param ptr pointer to the root node of the subtree.
- */
+
 void AvlTree::remove(const int data, BinaryNode* &ptr)
 {
 	BinarySearchTree::remove(data, ptr);
 	balance(ptr);
 }
 
-/**
- * Private method to balance the tree.
- * @param ptr pointer to the node to balance.
- * @return pointer to the balanced node.
- */
 BinaryNode *AvlTree::balance(BinaryNode* &ptr)
 {
 	if (ptr == nullptr) return ptr;
@@ -111,12 +84,7 @@ BinaryNode *AvlTree::balance(BinaryNode* &ptr)
 	return ptr;
 }
 
-/**
- * Case 1 (outside left-left): Rebalance with a single right rotation.
- * Update heights and return the new root node.
- * @param k2 pointer to the node to rotate.
- * @return pointer to the new root node.
- */
+
 BinaryNode *AvlTree::singleRightRotation(BinaryNode *k2)
 {
 	//reference : http://www.geeksforgeeks.org/avl-tree-set-1-insertion/
@@ -130,11 +98,7 @@ BinaryNode *AvlTree::singleRightRotation(BinaryNode *k2)
 	return temp;
 }
 
-/**
- * Case 2 (inside left-right): Rebalance with a double left-right rotation.
- * @param k3 pointer to the node to rotate.
- * @return pointer to the new root node.
- */
+
 BinaryNode *AvlTree::doubleLeftRightRotation(BinaryNode *k3)
 {
 	//reference : http://www.geeksforgeeks.org/avl-tree-set-1-insertion/
@@ -144,11 +108,7 @@ BinaryNode *AvlTree::doubleLeftRightRotation(BinaryNode *k3)
 	return singleRightRotation (k3); //right rotation
 }
 
-/**
- * Case 3 (inside right-left): Rebalance with a double left rotation.
- * @param k1 pointer to the node to rotate.
- * @return pointer to the new root node.
- */
+
 BinaryNode *AvlTree::doubleRightLeftRotation(BinaryNode *k1)
 {
 	BinaryNode *temp;
@@ -157,16 +117,10 @@ BinaryNode *AvlTree::doubleRightLeftRotation(BinaryNode *k1)
 	return singleLeftRotation (k1); //left rotation
 }
 
-/**
- * Case 4 (outside right-right): Rebalance with a single left rotation.
- * Update heights and return the new root node.
- * @param k2 pointer to the node to rotate.
- * @return pointer to the new root node.
- */
+
 BinaryNode *AvlTree::singleLeftRotation(BinaryNode *k1)
 {
-	//reference : http://www.geeksforgeeks.org/avl-tree-set-1-insertion/
-	//reference : http://www.sanfoundry.com/cpp-program-implement-avl-trees/
+
 	BinaryNode *temp = k1->right; //take right element
 	k1->right = temp->left;
 	temp->left = k1; //replace k1 with its left element
@@ -175,12 +129,7 @@ BinaryNode *AvlTree::singleLeftRotation(BinaryNode *k1)
 	return temp;
 }
 
-/**
- * Private method for a paranoid check of whether a tree node is balanced.
- * @param ptr pointer to the node to check.
- * @return the height of the node if balanced, -1 if the node is null,
- *         or -2 if unbalanced.
- */
+
 int AvlTree::checkBalance(BinaryNode *ptr)
 {
 	if (ptr == nullptr) return -1;
